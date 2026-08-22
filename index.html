@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Legacy Select — Sistema de Seleção de Fotos</title>
+<title>Rodrigo Costa Fotografia — Sistema de Seleção de Fotos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -44,8 +44,13 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button, a { touch-action: manipulation; }
 body::before {
   content: '';
   position: fixed;
@@ -390,8 +395,8 @@ body::before {
 .modal-close:hover { background: var(--surface3); color: var(--text); }
 #client-panel {
   position: relative; z-index: 1;
-  min-height: 100vh; background: var(--bg);
-  padding-bottom: 180px;
+  min-height: 100vh; min-height: 100dvh; background: var(--bg);
+  padding-bottom: calc(180px + env(safe-area-inset-bottom));
 }
 #client-header {
   position: sticky; top: 0; z-index: 100;
@@ -513,7 +518,7 @@ body::before {
 #action-bar {
   position: fixed; bottom: 0; left: 0; right: 0;
   z-index: 200;
-  padding: 16px 24px;
+  padding: 16px 24px calc(16px + env(safe-area-inset-bottom));
   background: rgba(7,8,11,0.95);
   backdrop-filter: blur(24px);
   border-top: 1px solid var(--border);
@@ -655,6 +660,157 @@ body::before {
   padding: 12px 16px; border-bottom: 1px solid var(--border);
   background: var(--bg2);
 }
+
+/* ============================================================
+   SALES ENGINE — CAMADA COMERCIAL (não altera backend)
+   ============================================================ */
+.sales-engine {
+  max-width: 1400px; margin: 18px auto 0; padding: 0 24px;
+}
+.sales-engine-card {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, rgba(34,197,94,.075), rgba(240,169,75,.045) 52%, rgba(96,165,250,.035));
+  border: 1px solid rgba(255,255,255,.10); border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.18);
+}
+.sales-engine-card::after {
+  content:''; position:absolute; inset:auto -80px -100px auto; width:260px; height:260px;
+  background: radial-gradient(circle, rgba(240,169,75,.10), transparent 68%); pointer-events:none;
+}
+.sales-conversion-intro { margin-top:16px; padding:16px 18px; border-radius:15px; background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.08); position:relative; z-index:1; }
+.sales-conversion-intro strong { color:var(--text); }
+.sales-conversion-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:12px; }
+.sales-step { padding:10px 12px; border-radius:11px; background:rgba(7,8,11,.34); border:1px solid rgba(255,255,255,.065); }
+.sales-step-num { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(34,197,94,.12); color:var(--green); font-size:.7rem; font-weight:800; margin-bottom:7px; }
+.sales-step-title { font-size:.75rem; font-weight:700; }
+.sales-step-text { margin-top:3px; font-size:.68rem; color:var(--text3); line-height:1.45; }
+.sales-album-offer { margin-top:16px; display:grid; grid-template-columns:1.15fr .85fr; gap:18px; padding:16px; border-radius:18px; background:linear-gradient(135deg,rgba(240,169,75,.095),rgba(255,255,255,.035) 60%,rgba(96,165,250,.04)); border:1px solid rgba(240,169,75,.28); position:relative; z-index:1; overflow:hidden; }
+.sales-album-offer::before { content:''; position:absolute; width:300px; height:300px; right:-140px; top:-160px; background:radial-gradient(circle,rgba(240,169,75,.16),transparent 68%); pointer-events:none; }
+.sales-album-copy { position:relative; z-index:1; }
+.sales-album-kicker { display:inline-flex; padding:4px 9px; border-radius:20px; font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; font-weight:800; color:var(--gold); background:rgba(240,169,75,.11); border:1px solid rgba(240,169,75,.22); }
+.sales-album-title { margin-top:9px; font-family:var(--font-display); font-size:1.15rem; font-weight:800; line-height:1.25; }
+.sales-album-sub { margin-top:6px; color:var(--text2); font-size:.78rem; line-height:1.55; max-width:620px; }
+.sales-album-benefits { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:12px; }
+.sales-album-benefit { padding:8px 9px; border-radius:10px; background:rgba(7,8,11,.30); border:1px solid rgba(255,255,255,.065); font-size:.69rem; color:var(--text2); }
+.sales-album-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sales-album-old-price {
+  color: var(--text3);
+  font-size: .9rem;
+  text-decoration: line-through;
+}
+
+.sales-album-benefit strong { display:block; color:var(--text); font-size:.73rem; margin-bottom:2px; }
+.sales-album-price { display:flex; align-items:flex-end; gap:7px; margin-top:13px; }
+.sales-album-price strong { font-family:var(--font-display); color:var(--gold); font-size:1.65rem; line-height:1; }
+.sales-album-price span { color:var(--text3); font-size:.7rem; padding-bottom:2px; }
+.sales-album-cta { margin-top:13px; width:100%; min-height:46px; border:none; border-radius:11px; background:linear-gradient(135deg,#f0a94b,#f59e0b); color:#160b02; font-family:var(--font-display); font-weight:800; font-size:.84rem; letter-spacing:.02em; cursor:pointer; box-shadow:0 8px 28px rgba(240,169,75,.23); transition:.2s; }
+.sales-album-cta:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(240,169,75,.32); }
+.sales-album-cta.active { background:linear-gradient(135deg,#22c55e,#16a34a); color:#031009; box-shadow:0 8px 28px rgba(34,197,94,.22); }
+.sales-album-video { min-width:0; position:relative; z-index:1; }
+.sales-album-video-wrap { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:13px; border:1px solid rgba(255,255,255,.1); background:#000; box-shadow:0 14px 36px rgba(0,0,0,.28); }
+.sales-album-video-wrap iframe { width:100%; height:100%; border:0; display:block; }
+.sales-album-video-player { position:absolute; inset:0; display:none; }
+.sales-album-video-player iframe { width:100%; height:100%; border:0; display:block; }
+.sales-album-video-poster { position:absolute; inset:0; overflow:hidden; cursor:pointer; background:#111; }
+.sales-album-video-poster img { width:100%; height:100%; object-fit:cover; display:block; }
+.sales-album-video-shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.68)); }
+.sales-album-video-play { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:66px; height:66px; border-radius:50%; border:1px solid rgba(255,255,255,.55); background:rgba(0,0,0,.58); color:#fff; font-size:24px; cursor:pointer; display:flex; align-items:center; justify-content:center; padding-left:4px; box-shadow:0 12px 32px rgba(0,0,0,.35); }
+.sales-album-video-play:hover { transform:translate(-50%,-50%) scale(1.05); background:rgba(0,0,0,.72); }
+.sales-album-video-poster-copy { position:absolute; left:14px; right:14px; bottom:12px; color:#fff; display:flex; flex-direction:column; gap:3px; text-shadow:0 2px 10px rgba(0,0,0,.55); }
+.sales-album-video-poster-copy strong { font-family:var(--font-display); font-size:.85rem; }
+.sales-album-video-poster-copy span { font-size:.68rem; color:rgba(255,255,255,.78); }
+.sales-album-video.is-playing .sales-album-video-poster { display:none; }
+.sales-album-video.is-playing .sales-album-video-player { display:block; }
+.sales-album-video-caption { margin-top:7px; text-align:center; color:var(--text3); font-size:.66rem; }
+.sales-album-video-caption a { color:var(--gold); font-weight:700; text-decoration:none; }
+.sales-album-state { margin-top:9px; font-size:.71rem; color:var(--green); display:none; }
+.sales-engine.upsell-pulse .sales-engine-card { animation:salesPulse .8s ease; }
+@keyframes salesPulse { 0%{transform:scale(1)} 45%{transform:scale(1.008); box-shadow:0 0 0 4px rgba(240,169,75,.08),0 18px 50px rgba(0,0,0,.18)} 100%{transform:scale(1)} }
+@media (max-width: 900px) { .sales-conversion-steps { grid-template-columns:1fr; } .sales-album-offer { grid-template-columns:1fr; } }
+.sales-engine-head { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; flex-wrap:wrap; position:relative; z-index:1; }
+.sales-engine-title { font-family:var(--font-display); font-size:1.08rem; font-weight:700; }
+.sales-engine-sub { color:var(--text2); font-size:.83rem; line-height:1.55; margin-top:5px; max-width:680px; }
+.sales-engine-progress { min-width:190px; text-align:right; }
+.sales-engine-progress .se-mini-label { color:var(--text3); font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; }
+.sales-engine-progress .se-mini-value { font-family:var(--font-display); font-size:1.1rem; margin-top:4px; }
+.sales-engine-progress .se-mini-value strong { color:var(--green); }
+.sales-engine-progress .se-mini-value.over strong { color:var(--gold); }
+.sales-offers { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:16px; position:relative; z-index:1; }
+.sales-offer {
+  min-width:0; text-align:left; background:rgba(7,8,11,.42); border:1px solid rgba(255,255,255,.09); border-radius:14px;
+  padding:14px; cursor:pointer; transition:.2s; position:relative; overflow:hidden;
+}
+.sales-offer:hover { transform:translateY(-3px); border-color:rgba(34,197,94,.38); background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035)); box-shadow:0 14px 30px rgba(0,0,0,.22); }
+.sales-offer.recommended { border-color:rgba(240,169,75,.48); box-shadow:0 10px 34px rgba(240,169,75,.11); transform:translateY(-1px); }
+.sales-offer-badge { display:inline-flex; padding:3px 8px; border-radius:20px; font-size:.62rem; letter-spacing:.09em; text-transform:uppercase; font-weight:700; background:rgba(240,169,75,.12); color:var(--gold); border:1px solid rgba(240,169,75,.24); margin-bottom:8px; }
+.sales-offer-name { font-family:var(--font-display); font-weight:700; font-size:.93rem; }
+.sales-offer-desc { color:var(--text2); font-size:.75rem; line-height:1.45; margin-top:4px; min-height:42px; }
+.sales-offer-price { display:flex; align-items:baseline; gap:7px; margin-top:9px; }
+.sales-offer-price strong { font-family:var(--font-display); font-size:1.25rem; color:var(--gold); }
+.sales-offer-price span { color:var(--text3); font-size:.68rem; text-decoration:line-through; }
+.sales-offer-cta { margin-top:11px; display:flex; align-items:center; justify-content:center; min-height:34px; border-radius:9px; background:rgba(34,197,94,.11); border:1px solid rgba(34,197,94,.22); font-size:.72rem; font-weight:700; color:var(--green); letter-spacing:.01em; }
+.sales-offer.recommended .sales-offer-cta { background:var(--green); border-color:var(--green); color:#031009; }
+.sales-admin-rule { background:linear-gradient(135deg,rgba(240,169,75,.07),rgba(255,255,255,.02)); border:1px solid rgba(240,169,75,.20); border-radius:14px; padding:15px 16px; }
+.sales-admin-rule-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+.sales-admin-rule-title { font-family:var(--font-display); font-weight:700; font-size:.88rem; }
+.sales-admin-rule-sub { color:var(--text3); font-size:.74rem; margin-top:3px; }
+.sales-admin-rule-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.sales-admin-rule-grid > div { padding:10px; background:rgba(7,8,11,.34); border:1px solid rgba(255,255,255,.07); border-radius:10px; }
+.sales-admin-rule-grid strong { display:block; font-size:.78rem; }
+.sales-admin-rule-grid span { display:block; margin-top:3px; color:var(--text3); font-size:.68rem; }
+.sales-hero-cta { margin-top:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.sales-primary-copy { color:var(--text2); font-size:.77rem; line-height:1.4; }
+.sales-primary-copy strong { color:var(--text); }
+.sales-engine-note { margin-top:14px; padding:10px 12px; border-radius:11px; background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.065); color:var(--text2); font-size:.76rem; line-height:1.5; position:relative; z-index:1; }
+.sales-engine-note strong { color:var(--text); }
+.sales-engine-note .sale-hot { color:var(--gold); }
+.sales-favorite-row { margin-top:11px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; position:relative; z-index:1; }
+.sales-favorite-pill { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:6px 10px; background:rgba(248,113,113,.08); color:#fca5a5; border:1px solid rgba(248,113,113,.18); font-size:.72rem; }
+.sales-favorite-pill button { border:0; background:transparent; color:inherit; cursor:pointer; font-size:.72rem; padding:0; }
+.photo-fav-btn { position:absolute; left:10px; top:10px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:50%; border:1px solid rgba(255,255,255,.16); background:rgba(0,0,0,.48); color:rgba(255,255,255,.78); opacity:.92; z-index:3; cursor:pointer; backdrop-filter:blur(6px); }
+.photo-fav-btn.active { color:#ff9da0; background:rgba(248,113,113,.18); border-color:rgba(248,113,113,.38); }
+.photo-fav-btn svg { width:16px; height:16px; }
+#lightbox-commerce { position:absolute; left:50%; bottom:58px; transform:translateX(-50%); display:flex; align-items:center; gap:8px; padding:8px; border-radius:14px; background:rgba(7,8,11,.88); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(18px); box-shadow:0 16px 40px rgba(0,0,0,.35); }
+#lightbox-commerce button { min-width:138px; }
+.sales-scroll-anchor { scroll-margin-top:90px; }
+@media (max-width: 1100px) { .sales-offers { grid-template-columns:repeat(2,minmax(0,1fr)); } .sales-admin-rule-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width: 900px) { .sales-offers { grid-template-columns:1fr; } .sales-engine-progress { text-align:left; width:100%; } }
+@media (max-width: 600px) {
+  .sales-engine { padding:0 12px; }
+  .sales-engine-card { padding:14px; border-radius:16px; }
+  .sales-conversion-intro { padding:13px; }
+  .sales-offer { padding:12px; }
+  .sales-album-offer { gap:12px; padding:13px; border-radius:16px; }
+  .sales-album-benefits { gap:6px; }
+  .sales-album-benefit { padding:8px; }
+  .sales-album-video-wrap { min-height:190px; }
+  .sales-album-video-play { width:58px; height:58px; font-size:21px; }
+  .sales-album-title { font-size:1.02rem; }
+  .sales-album-sub { font-size:.76rem; }
+  .sales-album-cta { min-height:48px; font-size:.83rem; }
+  #lightbox-commerce { left:12px; right:12px; transform:none; bottom:calc(52px + env(safe-area-inset-bottom)); justify-content:center; }
+  #lightbox-commerce button { flex:1; min-width:0; min-height:44px; }
+  #client-header { padding:0 12px; }
+  .client-header-inner { gap:10px; padding:10px 0; }
+  .client-gallery-container { padding:22px 12px; }
+  .info-banner { padding:16px; gap:14px; }
+  .info-banner-stats { gap:12px; }
+  .action-bar { }
+  #action-bar { padding-left:12px; padding-right:12px; }
+  .action-bar-btns { width:100%; }
+  .action-bar-btns .btn { flex:1 1 0; min-height:44px; }
+}
+@supports (-webkit-touch-callout: none) {
+  #client-panel { min-height: -webkit-fill-available; }
+}
+
 @media (max-width: 768px) {
   #sidebar { display: none; }
   #main-content { padding: 20px 16px; }
@@ -1081,7 +1237,7 @@ body::before {
           <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
         </svg>
       </div>
-      <h1>Legacy<span>Select</span></h1>
+      <h1>Foto<span>Select</span></h1>
       <small>Acesso ao Painel Administrativo</small>
     </div>
     <div class="login-form-title">Entrar com sua conta</div>
@@ -1118,6 +1274,10 @@ body::before {
   <button id="lightbox-prev" onclick="lightboxNav(-1)">&#8249;</button>
   <img id="lightbox-img" src="" alt="Foto">
   <button id="lightbox-next" onclick="lightboxNav(1)">&#8250;</button>
+  <div id="lightbox-commerce">
+    <button class="btn btn-primary btn-sm" id="lb-select-btn" onclick="toggleLightboxPhoto()">Adicionar à seleção</button>
+    <button class="btn btn-secondary btn-sm" id="lb-favorite-btn" onclick="toggleLightboxFavorite()">♡ Favoritar</button>
+  </div>
   <div id="lightbox-info">1 / 1</div>
 </div>
 
@@ -1132,7 +1292,7 @@ body::before {
   </div>
   <div id="sidebar">
     <div class="sidebar-logo">
-      <h1>Legacy<span>Select</span></h1>
+      <h1>Foto<span>Select</span></h1>
       <small>Painel Administrativo</small>
     </div>
     <div class="nav-label">Menu Principal</div>
@@ -1206,6 +1366,23 @@ body::before {
           <div class="field"><label>Nome do Evento</label><input type="text" id="client-event" placeholder="Ex: Casamento Silva &amp; Santos"></div>
           <div class="field"><label>Fotos Incluídas no Pacote *</label><input type="number" id="client-included" placeholder="Ex: 20" min="1"></div>
           <div class="field"><label>Valor por Foto Extra (R$)</label><input type="number" id="client-price" placeholder="Ex: 25.00" step="0.01" min="0"></div>
+          <div class="field" style="grid-column:1/-1;">
+            <div class="sales-admin-rule">
+              <div class="sales-admin-rule-head">
+                <div>
+                  <div class="sales-admin-rule-title">Progressão comercial de extras</div>
+                  <div class="sales-admin-rule-sub">Aplicada automaticamente na página de seleção do cliente.</div>
+                </div>
+                <span class="badge badge-gold">Fixa</span>
+              </div>
+              <div class="sales-admin-rule-grid">
+                <div><strong>1 extra</strong><span>valor cadastrado</span></div>
+                <div><strong>+5 extras</strong><span>condição especial</span></div>
+                <div><strong>+10 extras</strong><span>condição especial</span></div>
+                <div><strong>Galeria completa</strong><span>condição especial</span></div>
+              </div>
+            </div>
+          </div>
           <div class="field"><label>Data do Evento</label><input type="date" id="client-date"></div>
         </div>
         <div style="margin-top:16px;">
@@ -1494,16 +1671,81 @@ CREATE POLICY "fs_storage_delete" ON storage.objects FOR DELETE TO anon USING (b
       </div>
     </div>
   </div>
+
+  <section id="sales-engine" class="sales-engine sales-scroll-anchor" aria-label="Ofertas da galeria">
+    <div class="sales-engine-card">
+      <div class="sales-engine-head">
+        <div>
+          <div class="sales-engine-title" id="sales-engine-title">Monte sua seleção com liberdade ❤️</div>
+          <div class="sales-engine-sub" id="sales-engine-sub">Suas fotos do pacote já estão incluídas. Gostou de outras? Leve mais momentos da sua galeria com as opções abaixo.</div>
+        </div>
+        <div class="sales-engine-progress">
+          <div class="se-mini-label">Sua seleção</div>
+          <div class="se-mini-value" id="sales-engine-progress">0 / 0</div>
+        </div>
+      </div>
+      <div id="sales-offers" class="sales-offers"></div>
+      <div class="sales-conversion-intro">
+        <strong>Como aproveitar sua galeria</strong>
+        <div class="sales-conversion-steps">
+          <div class="sales-step"><div class="sales-step-num">1</div><div class="sales-step-title">Escolha suas favoritas</div><div class="sales-step-text">Suas fotos incluídas já estão garantidas.</div></div>
+          <div class="sales-step"><div class="sales-step-num">2</div><div class="sales-step-title">Apaixonou por mais?</div><div class="sales-step-text">Você pode ampliar sua seleção com condições especiais.</div></div>
+          <div class="sales-step"><div class="sales-step-num">3</div><div class="sales-step-title">Finalize</div><div class="sales-step-text">Revise tudo e conclua sua escolha quando estiver satisfeito.</div></div>
+        </div>
+      </div>
+      <div class="sales-album-offer" id="sales-album-offer">
+        <div class="sales-album-copy">
+          <div class="sales-album-kicker">Exclusivo durante esta seleção</div>
+          <div class="sales-album-title">Transforme suas fotos em um álbum que você vai poder tocar e reviver.</div>
+          <div class="sales-album-sub">Álbum impresso tradicional 21×30 cm, 23 páginas, capa dura. Nesta condição especial, você ainda recebe espaço para <strong>+10 fotos extras</strong> na sua seleção.</div>
+          <div class="sales-album-benefits">
+            <div class="sales-album-benefit"><strong>Álbum modelo Tradicional</strong>21×30 cm · 23 páginas</div>
+            <div class="sales-album-benefit"><strong>Capa dura</strong>Folhas em papel couche 170g</div>
+            <div class="sales-album-benefit"><strong>+10 fotos extras</strong>Para completar a história</div>
+            <div class="sales-album-benefit"><strong>Exclusivo na seleção </strong>Disponível somente neste momento</div>
+          </div>
+          <div class="sales-album-price">
+  <span class="sales-album-old-price">De R$ 190</span>
+  <strong>por R$ 120</strong>
+  <span>álbum + 10 fotos adicionais</span>
+</div>
+          <button type="button" class="sales-album-cta" id="sales-album-cta" onclick="activateAlbumOffer()">Quero o álbum + 10 fotos</button>
+          <div class="sales-album-state" id="sales-album-state">✓ Oferta adicionada à sua seleção. Agora escolha até 10 fotos extras para o álbum.</div>
+        </div>
+        <div class="sales-album-video">
+          <div class="sales-album-video-wrap" id="sales-album-video-wrap" data-youtube-id="8iL5DQ_4dvk">
+            <div class="sales-album-video-poster" id="sales-album-video-poster" aria-label="Apresentação do álbum impresso" onclick="openAlbumVideo()">
+              <img src="https://i.ytimg.com/vi/8iL5DQ_4dvk/hqdefault.jpg" alt="Prévia do álbum impresso" loading="lazy">
+              <div class="sales-album-video-shade"></div>
+              <button type="button" class="sales-album-video-play" id="sales-album-video-play" onclick="event.stopPropagation();openAlbumVideo()" aria-label="Assistir vídeo do álbum">▶</button>
+              <div class="sales-album-video-poster-copy">
+                <strong>Veja o álbum por dentro</strong>
+                <span>Toque para assistir à apresentação</span>
+              </div>
+            </div>
+            <div class="sales-album-video-player" id="sales-album-video-player"></div>
+          </div>
+          <div class="sales-album-video-caption" id="sales-album-video-caption">▶ Assista à apresentação antes de decidir.</div>
+        </div>
+      </div>
+      <div id="sales-engine-note" class="sales-engine-note">Selecione suas favoritas para montar sua seleção.</div>
+      <div class="sales-favorite-row">
+        <div class="sales-favorite-pill" id="sales-favorite-pill" style="display:none;">♡ <span id="sales-favorite-count">0</span> favoritas <button type="button" onclick="filterGallery('favorites')">Ver favoritas</button></div>
+      </div>
+    </div>
+  </section>
+
   <div class="client-gallery-container">
     <div class="client-gallery-header">
       <div>
         <div class="client-gallery-title">Galeria de Fotos <span id="gallery-total-label"></span></div>
-        <p style="color:var(--text2);font-size:0.85rem;margin-top:4px;">Clique nas fotos para selecionar as que deseja</p>
+        <p style="color:var(--text2);font-size:0.85rem;margin-top:4px;">Escolha suas favoritas e monte a seleção do seu jeito. Você pode ampliar qualquer foto antes de decidir.</p>
       </div>
       <div class="filter-btns">
         <button class="filter-btn active" onclick="filterGallery('all')" id="filter-all">Todas</button>
         <button class="filter-btn" onclick="filterGallery('selected')" id="filter-selected">Selecionadas</button>
         <button class="filter-btn" onclick="filterGallery('unselected')" id="filter-unselected">Não Selecionadas</button>
+        <button class="filter-btn" onclick="filterGallery('favorites')" id="filter-favorites">♡ Favoritas</button>
       </div>
     </div>
     <div id="progress-container" style="margin-bottom:20px;">
@@ -1517,14 +1759,14 @@ CREATE POLICY "fs_storage_delete" ON storage.objects FOR DELETE TO anon USING (b
   <div id="action-bar">
     <div class="action-bar-inner">
       <div class="action-bar-info">
-        <div class="total-label">Total a Pagar</div>
+        <div class="total-label" id="action-total-label">Total das extras</div>
         <div class="total-value" id="action-total">R$ 0,00</div>
       </div>
       <div class="action-bar-btns">
         <button class="btn btn-ghost" id="btn-deselect-all" onclick="deselectAll()">Limpar Seleção</button>
         <button class="btn btn-gold" id="btn-pay" onclick="openPixModal()" style="display:none;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          Pagar Fotos Extras
+          Continuar para pagamento
         </button>
         <button class="btn btn-primary" id="btn-confirm" onclick="openConfirmModal()" disabled>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1542,7 +1784,7 @@ CREATE POLICY "fs_storage_delete" ON storage.objects FOR DELETE TO anon USING (b
 
   <!-- Top bar -->
   <div class="bw-top-bar">
-    <div class="bw-top-logo">Legacy<span>Select</span></div>
+    <div class="bw-top-logo">Foto<span>Select</span></div>
     <div class="bw-top-badge">✦ Experiência Exclusiva</div>
   </div>
 
@@ -1646,16 +1888,17 @@ CREATE POLICY "fs_storage_delete" ON storage.objects FOR DELETE TO anon USING (b
 <div class="modal-overlay hidden" id="modal-confirm">
   <div class="modal-box wide">
     <div class="modal-header">
-      <h3>✅ Confirmar Seleção</h3>
+      <h3>✅ Finalizar minha seleção</h3>
       <button class="modal-close" onclick="closeModal('modal-confirm')">✕</button>
     </div>
-    <p style="color:var(--text2);font-size:0.88rem;margin-bottom:20px;">Revise sua seleção antes de confirmar. Após confirmação, as fotos escolhidas serão enviadas ao fotógrafo.</p>
+    <p style="color:var(--text2);font-size:0.88rem;margin-bottom:20px;">Revise suas escolhas antes de finalizar. Suas fotos incluídas e extras serão registradas e enviadas ao fotógrafo.</p>
     <div class="selection-summary-grid">
       <div class="summary-item"><div class="s-label">Fotos Selecionadas</div><div class="s-val green" id="confirm-selected">0</div></div>
       <div class="summary-item"><div class="s-label">Incluídas no Pacote</div><div class="s-val" id="confirm-included">0</div></div>
       <div class="summary-item"><div class="s-label">Fotos Extras</div><div class="s-val gold" id="confirm-extras">0</div></div>
       <div class="summary-item"><div class="s-label">Total Pago</div><div class="s-val gold" id="confirm-total">R$ 0,00</div></div>
     </div>
+    <div id="confirm-album-detail" style="display:none;margin-bottom:16px;padding:11px 13px;border-radius:10px;background:rgba(240,169,75,.08);border:1px solid rgba(240,169,75,.20);color:var(--gold);font-size:.78rem;"></div>
     <div style="margin-bottom:16px;">
       <div style="font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Fotos Selecionadas</div>
       <div class="selection-thumbs" id="confirm-thumbs"></div>
@@ -1667,7 +1910,7 @@ CREATE POLICY "fs_storage_delete" ON storage.objects FOR DELETE TO anon USING (b
       </button>
       <button class="btn btn-primary btn-block" onclick="confirmSelection()" id="btn-final-confirm">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        Confirmar e Enviar ao Fotógrafo
+        Finalizar minha seleção
       </button>
     </div>
   </div>
@@ -1750,13 +1993,19 @@ let lightboxIndex = 0;
 let lightboxPhotos = [];
 let selectionDetailClientId = null;
 let activeFilter = 'all';
+let salesTargetCount = null;
+let salesViewedIds = new Set();
+let salesFavoriteIds = new Set();
+let salesAlbumAdded = false;
+const SALES_ENGINE_SETTINGS = { package5Discount: 0.15, package10Discount: 0.20, fullGalleryDiscount: 0.40, albumPrice: 120, albumBonusPhotos: 10 };
+const SALES_ENGINE_LABELS = { single: 'Foto extra', package5: '+5 fotos', package10: '+10 fotos', full: 'Galeria completa' };
 
 // Safe localStorage wrapper — iOS Safari modo privado bloqueia localStorage
 const _lsCache = {};
 const safeLS = {
-  getItem(k) { try { return safeLS.getItem(k); } catch(e) { return _lsCache[k] || null; } },
-  setItem(k, v) { try { safeLS.setItem(k, v); } catch(e) { _lsCache[k] = v; } },
-  removeItem(k) { try { safeLS.removeItem(k); } catch(e) { delete _lsCache[k]; } }
+  getItem(k) { try { return window.localStorage.getItem(k); } catch(e) { return _lsCache[k] || null; } },
+  setItem(k, v) { try { window.localStorage.setItem(k, v); } catch(e) { _lsCache[k] = v; } },
+  removeItem(k) { try { window.localStorage.removeItem(k); } catch(e) { delete _lsCache[k]; } }
 };
 
 // ============================================================
@@ -2393,7 +2642,7 @@ async function loadDashboard() {
     const cPhotos = photos.filter(p => p.clientId === c.id);
     const sel = await dbGet('selections', c.id);
     const extras = sel ? Math.max(0, sel.selectedPhotoIds.length - c.includedCount) : 0;
-    const totalVal = extras * c.pricePerExtra;
+    const totalVal = sel ? (Number(sel.totalValue) || 0) : 0;
     let statusBadge = `<span class="badge badge-gray">Aguardando</span>`;
     if (sel) {
       if (sel.paymentStatus === 'confirmed') statusBadge = `<span class="badge badge-green">✓ Seleção Recebida</span>`;
@@ -2927,6 +3176,12 @@ async function loadClientArea(clientId) {
   }
 
   document.getElementById('client-panel').classList.remove('hidden');
+  const salesEngine = document.getElementById('sales-engine');
+  if (salesEngine) salesEngine.style.display = '';
+  const progressContainer = document.getElementById('progress-container');
+  if (progressContainer) progressContainer.style.display = '';
+  const actionBar = document.getElementById('action-bar');
+  if (actionBar) actionBar.style.display = '';
   document.getElementById('banner-event-name').textContent = client.event || client.name;
   document.getElementById('banner-client-name').textContent = `Cliente: ${client.name}`;
   document.getElementById('banner-included').textContent = client.includedCount;
@@ -2934,29 +3189,299 @@ async function loadClientArea(clientId) {
   document.getElementById('banner-total-photos').textContent = photos.length;
   document.getElementById('gallery-total-label').innerHTML = `<span>(${photos.length} fotos)</span>`;
 
+  initSalesEngineState();
   renderClientGallery();
   updateClientCounter();
+  renderSalesEngine();
+  initAlbumVideo();
 
   if (paymentStatus === 'paid') {
     document.getElementById('btn-confirm').disabled = false;
   }
 }
 
+
+function salesStorageKey(kind, clientId) { return `legacySelect_${kind}_${clientId}`; }
+function salesSafeGet(key, fallback=[]) {
+  try { const raw = window.localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch(e) { return fallback; }
+}
+function salesSafeSet(key, value) { try { window.localStorage.setItem(key, JSON.stringify(value)); } catch(e) {} }
+function initSalesEngineState() {
+  if (!currentClientData) return;
+  salesAlbumAdded = !!salesSafeGet(salesStorageKey('album', currentClientData.id), false);
+  salesViewedIds = new Set(salesSafeGet(salesStorageKey('viewed', currentClientData.id), []));
+  salesFavoriteIds = new Set(salesSafeGet(salesStorageKey('favorites', currentClientData.id), []));
+  updateFavoriteFilterVisibility();
+  renderSalesEngine();
+}
+function saveSalesState() {
+  if (!currentClientData) return;
+  salesSafeSet(salesStorageKey('viewed', currentClientData.id), Array.from(salesViewedIds).slice(-80));
+  salesSafeSet(salesStorageKey('favorites', currentClientData.id), Array.from(salesFavoriteIds));
+  salesSafeSet(salesStorageKey('album', currentClientData.id), salesAlbumAdded);
+}
+function toggleFavorite(photoId, e) {
+  if (e) e.stopPropagation();
+  if (salesFavoriteIds.has(photoId)) salesFavoriteIds.delete(photoId); else salesFavoriteIds.add(photoId);
+  saveSalesState(); renderClientGallery(); renderSalesEngine();
+}
+function updateFavoriteFilterVisibility() {
+  const btn = document.getElementById('filter-favorites');
+  const pill = document.getElementById('sales-favorite-pill');
+  const count = salesFavoriteIds.size;
+  if (btn) btn.style.display = count ? 'inline-flex' : 'none';
+  if (pill) { pill.style.display = count ? 'inline-flex' : 'none'; document.getElementById('sales-favorite-count').textContent = count; }
+}
+function activateAlbumOffer() {
+  if (!currentClientData || salesAlbumAdded) return;
+  salesAlbumAdded = true;
+  saveSalesState();
+  const engine = document.getElementById('sales-engine');
+  if (engine) { engine.classList.remove('upsell-pulse'); void engine.offsetWidth; engine.classList.add('upsell-pulse'); }
+  const btn = document.getElementById('sales-album-cta');
+  const state = document.getElementById('sales-album-state');
+  if (btn) { btn.textContent = '✓ Álbum adicionado à seleção'; btn.classList.add('active'); }
+  if (state) state.style.display = 'block';
+  renderClientGallery();
+  updateClientCounter();
+  renderSalesEngine();
+  const gallery = document.querySelector('.client-gallery-container');
+  if (gallery) gallery.scrollIntoView({behavior:'smooth', block:'start'});
+  showToast('Álbum reservado! Agora escolha até 10 fotos extras.', 'success');
+}
+function getAlbumBonusRemaining(selectedCount) {
+  if (!salesAlbumAdded) return 0;
+  const included = Math.max(0, Number(currentClientData?.includedCount) || 0);
+  return Math.max(0, SALES_ENGINE_SETTINGS.albumBonusPhotos - Math.max(0, selectedCount - included));
+}
+function getChargeableExtras(selectedCount) {
+  const included = Math.max(0, Number(currentClientData?.includedCount) || 0);
+  const selectedExtras = Math.max(0, selectedCount - included);
+  return Math.max(0, selectedExtras - (salesAlbumAdded ? SALES_ENGINE_SETTINGS.albumBonusPhotos : 0));
+}
+function updateAlbumUI() {
+  const btn = document.getElementById('sales-album-cta');
+  const state = document.getElementById('sales-album-state');
+  if (!btn) return;
+  if (salesAlbumAdded) {
+    btn.textContent = '✓ Álbum adicionado à seleção';
+    btn.classList.add('active');
+    if (state) state.style.display = 'block';
+  } else {
+    btn.textContent = 'Quero o álbum + 10 fotos';
+    btn.classList.remove('active');
+    if (state) state.style.display = 'none';
+  }
+}
+function formatSalesPrice(v) { return formatCurrency(Math.max(0, Math.round(v * 100) / 100)); }
+function salesRound(v) { return Math.round(v); }
+function getSalesExtraPrice(extraCount, totalPhotos, selectedCount) {
+  const price = Math.max(0, Number(currentClientData?.pricePerExtra) || 0);
+  const total = Math.max(0, Number(totalPhotos) || 0);
+  const selected = Math.max(0, Number(selectedCount) || 0);
+  const extras = Math.max(0, Number(extraCount) || 0);
+  if (!price) return salesAlbumAdded ? SALES_ENGINE_SETTINGS.albumPrice : 0;
+  const chargeableExtras = getChargeableExtras(selected);
+  const remainingAll = Math.max(0, total - Math.max(0, Number(currentClientData?.includedCount) || 0) - (salesAlbumAdded ? SALES_ENGINE_SETTINGS.albumBonusPhotos : 0));
+  let photoValue = 0;
+  if (selected >= total && total > 0) {
+    photoValue = salesRound(remainingAll * price * (1 - SALES_ENGINE_SETTINGS.fullGalleryDiscount));
+  } else if (chargeableExtras >= 10) {
+    photoValue = salesRound(chargeableExtras * price * (1 - SALES_ENGINE_SETTINGS.package10Discount));
+  } else if (chargeableExtras >= 5) {
+    photoValue = salesRound(chargeableExtras * price * (1 - SALES_ENGINE_SETTINGS.package5Discount));
+  } else if (chargeableExtras > 0) {
+    photoValue = salesRound(chargeableExtras * price);
+  }
+  return photoValue + (salesAlbumAdded ? SALES_ENGINE_SETTINGS.albumPrice : 0);
+}
+function getSalesOfferPrice(kind, remaining, price) {
+  if (kind === 'single') return salesRound(price);
+  if (kind === 'package5') return salesRound(price * 5 * (1 - SALES_ENGINE_SETTINGS.package5Discount));
+  if (kind === 'package10') return salesRound(price * 10 * (1 - SALES_ENGINE_SETTINGS.package10Discount));
+  if (kind === 'full') return salesRound(remaining * price * (1 - SALES_ENGINE_SETTINGS.fullGalleryDiscount));
+  return 0;
+}
+function chooseSalesOffer(target) {
+  salesTargetCount = target;
+  if (target === 'all' && allClientPhotos.length) {
+    allClientPhotos.forEach(p => selectedPhotoIds.add(p.id));
+    updateClientCounter();
+    renderClientGallery();
+    autoSaveDraft();
+    showToast('Galeria completa adicionada à sua seleção.', 'success');
+    return;
+  }
+  renderSalesEngine();
+  const gallery = document.querySelector('.client-gallery-container');
+  if (gallery) gallery.scrollIntoView({behavior:'smooth', block:'start'});
+  showToast(`Continue escolhendo suas favoritas para completar +${target} fotos.`, 'info');
+}
+function renderSalesEngine() {
+  if (!currentClientData) return;
+  const selected = selectedPhotoIds.size;
+  const included = Math.max(0, Number(currentClientData.includedCount) || 0);
+  const totalPhotos = allClientPhotos.length;
+  const price = Math.max(0, Number(currentClientData.pricePerExtra) || 0);
+  const rawExtras = Math.max(0, selected - included);
+  const chargeableExtras = getChargeableExtras(selected);
+  const albumRemaining = getAlbumBonusRemaining(selected);
+  const remaining = Math.max(0, totalPhotos - selected);
+  const progress = document.getElementById('sales-engine-progress');
+  const title = document.getElementById('sales-engine-title');
+  const sub = document.getElementById('sales-engine-sub');
+  const note = document.getElementById('sales-engine-note');
+  const offers = document.getElementById('sales-offers');
+  if (!progress || !title || !sub || !note || !offers) return;
+  progress.innerHTML = `${selected} / ${included}${rawExtras > 0 ? ' <strong>(+'+rawExtras+')</strong>' : ''}`;
+  progress.classList.toggle('over', rawExtras > 0);
+  if (salesAlbumAdded && albumRemaining > 0) {
+    note.innerHTML = `📖 <strong>Seu álbum está reservado.</strong> Você ainda pode escolher <strong>${albumRemaining} foto${albumRemaining===1?'':'s'}</strong> para completar as 10 fotos extras do álbum.`;
+  } else if (selected === 0) {
+    title.textContent = 'Comece pelas fotos que fazem você sentir ❤️';
+    sub.textContent = `Você tem ${included} foto${included === 1 ? '' : 's'} incluída${included === 1 ? '' : 's'} no pacote. Escolha primeiro as imagens indispensáveis — sem pressa.`;
+    note.innerHTML = '💡 <strong>Você pode mudar de ideia:</strong> marque favoritas, abra as fotos em tela cheia e só depois finalize sua seleção.';
+  } else if (selected < included) {
+    const left = included - selected;
+    title.textContent = `Você ainda pode escolher ${left} foto${left === 1 ? '' : 's'} incluída${left === 1 ? '' : 's'} ❤️`;
+    sub.textContent = `Você já separou ${selected}. Continue pelas imagens que você realmente quer guardar.`;
+    note.innerHTML = `Você está a <strong>${left} foto${left === 1 ? '' : 's'}</strong> de completar seu pacote.`;
+  } else if (rawExtras === 0) {
+    title.textContent = 'Seu pacote está completo 🎉';
+    sub.textContent = 'Agora vem a parte que mais importa: você pode continuar escolhendo as fotos que não quer deixar para trás.';
+    note.innerHTML = '✨ <strong>Gostou de outras?</strong> Veja as opções de ampliação abaixo e leve mais momentos para casa.';
+  } else if (selected >= totalPhotos && totalPhotos > 0) {
+    title.textContent = 'Você escolheu a galeria completa ❤️';
+    sub.textContent = 'Todos os momentos estão na sua seleção. Agora é só revisar e finalizar.';
+    note.innerHTML = '🌟 <strong>Seleção completa.</strong> Revise suas fotos e finalize quando estiver pronto.';
+  } else {
+    title.textContent = salesAlbumAdded ? `Seu álbum está com ${selected} fotos na seleção ❤️` : `Você está levando ${selected} fotos ❤️`;
+    sub.textContent = salesAlbumAdded ? `O álbum inclui até 10 fotos adicionais. As fotos que ultrapassarem esse benefício entram normalmente na sua seleção de extras.` : `Além do pacote, você já escolheu ${rawExtras} foto${rawExtras === 1 ? '' : 's'} extra${rawExtras === 1 ? '' : 's'}.`;
+    const total = getSalesExtraPrice(rawExtras, totalPhotos, selected);
+    note.innerHTML = salesAlbumAdded ? `Álbum + 10 fotos: <strong class="sale-hot">${formatSalesPrice(SALES_ENGINE_SETTINGS.albumPrice)}</strong> · extras adicionais: <strong class="sale-hot">${formatSalesPrice(Math.max(0,total-SALES_ENGINE_SETTINGS.albumPrice))}</strong>.` : `Sua seleção extra atual está em <strong class="sale-hot">${formatSalesPrice(total)}</strong>.`;
+    if (salesTargetCount && salesTargetCount !== 'all' && chargeableExtras >= salesTargetCount) salesTargetCount = null;
+  }
+  const cards = [];
+  if (price > 0 && totalPhotos > included) {
+    const single = getSalesOfferPrice('single', remaining, price);
+    const p5 = getSalesOfferPrice('package5', remaining, price);
+    const p10 = getSalesOfferPrice('package10', remaining, price);
+    if (!salesAlbumAdded && remaining >= 1) cards.push(`<div class="sales-offer" onclick="chooseSalesOffer(1)"><div class="sales-offer-name">+1 foto</div><div class="sales-offer-desc">Para aquela foto especial que você não quer deixar de fora.</div><div class="sales-offer-price"><strong>${formatSalesPrice(single)}</strong></div><div class="sales-offer-cta">Quero essa foto →</div></div>`);
+    if (!salesAlbumAdded && remaining >= 5) cards.push(`<div class="sales-offer" onclick="chooseSalesOffer(5)"><div class="sales-offer-name">+5 fotos</div><div class="sales-offer-desc">Mais variedade para guardar os momentos que fazem parte da sua história.</div><div class="sales-offer-price"><strong>${formatSalesPrice(p5)}</strong><span>${formatSalesPrice(price*5)}</span></div><div class="sales-offer-cta">Levar +5 fotos →</div></div>`);
+    if (!salesAlbumAdded && remaining >= 10) cards.push(`<div class="sales-offer recommended" onclick="chooseSalesOffer(10)"><div class="sales-offer-badge">Mais escolhido</div><div class="sales-offer-name">+10 fotos</div><div class="sales-offer-desc">Difícil escolher uma só, não é?!.</div><div class="sales-offer-price"><strong>${formatSalesPrice(p10)}</strong><span>${formatSalesPrice(price*10)}</span></div><div class="sales-offer-cta">Levar +10 fotos →</div></div>`);
+    if (!salesAlbumAdded && remaining > 0) {
+      const fullPrice = getSalesOfferPrice('full', remaining, price);
+      const normalPrice = salesRound(remaining * price);
+      cards.push(`<div class="sales-offer" onclick="chooseSalesOffer('all')"><div class="sales-offer-badge">Sem arrependimento</div><div class="sales-offer-name">Galeria completa</div><div class="sales-offer-desc">Leve todas as fotos que ainda não entraram na sua seleção e não deixe nenhum momento de fora.</div><div class="sales-offer-price"><strong>${formatSalesPrice(fullPrice)}</strong><span>${formatSalesPrice(normalPrice)}</span></div><div class="sales-offer-cta">Quero a galeria completa →</div></div>`);
+    }
+    if (salesAlbumAdded && remaining > 0) {
+      const extraAfterAlbum = Math.max(0, remaining - albumRemaining);
+      if (extraAfterAlbum > 0) cards.push(`<div class="sales-offer recommended" onclick="chooseSalesOffer(10)"><div class="sales-offer-badge">Próxima melhor escolha</div><div class="sales-offer-name">Mais 10 fotos</div><div class="sales-offer-desc">Depois das 10 fotos do álbum, amplie ainda mais a sua seleção.</div><div class="sales-offer-price"><strong>${formatSalesPrice(p10)}</strong></div><div class="sales-offer-cta">Quero mais 10 →</div></div>`);
+    }
+  }
+  offers.innerHTML = cards.join('');
+  updateAlbumUI();
+  updateFavoriteFilterVisibility();
+}
+
+function getAlbumVideoUrl() {
+  return 'https://www.youtube.com/watch?v=8iL5DQ_4dvk';
+}
+function getAlbumEmbedUrl() {
+  const base = 'https://www.youtube.com/embed/8iL5DQ_4dvk';
+  const params = new URLSearchParams({
+    rel: '0',
+    modestbranding: '1',
+    playsinline: '1',
+    origin: (location.protocol === 'http:' || location.protocol === 'https:') ? location.origin : ''
+  });
+  return `${base}?${params.toString()}`;
+}
+function initAlbumVideo() {
+  const wrap = document.getElementById('sales-album-video-wrap');
+  const caption = document.getElementById('sales-album-video-caption');
+  if (!wrap) return;
+  // Arquivo aberto localmente (file://) não fornece HTTP Referer. O YouTube pode
+  // bloquear o iframe com erro 153. Neste caso, mantemos a apresentação visual
+  // na própria tela e abrimos o vídeo oficial ao tocar.
+  const isLocalFile = location.protocol === 'file:';
+  const isIOSWebKit = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isLocalFile || isIOSWebKit) {
+    if (caption) caption.innerHTML = `▶ <a href="${getAlbumVideoUrl()}" target="_blank" rel="noopener noreferrer">Assistir a apresentação no YouTube</a>`;
+    return;
+  }
+}
+function openAlbumVideo() {
+  const wrap = document.getElementById('sales-album-video-wrap');
+  const shell = document.querySelector('.sales-album-video');
+  const player = document.getElementById('sales-album-video-player');
+  const caption = document.getElementById('sales-album-video-caption');
+  if (!wrap || !player || !shell) return;
+  const isLocalFile = location.protocol === 'file:';
+  const isIOSWebKit = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isLocalFile || isIOSWebKit) {
+    window.open(getAlbumVideoUrl(), '_blank', 'noopener,noreferrer');
+    return;
+  }
+  if (!player.querySelector('iframe')) {
+    const iframe = document.createElement('iframe');
+    iframe.src = getAlbumEmbedUrl();
+    iframe.title = 'Conheça os Álbuns Impressos — Rodrigo Costa Fotografia';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    player.appendChild(iframe);
+  }
+  shell.classList.add('is-playing');
+  if (caption) caption.textContent = '▶ Apresentação do álbum';
+}
+
+function filterSalesFavorites() { filterGallery('favorites'); }
+function toggleLightboxPhoto() {
+  const photo = lightboxPhotos[lightboxIndex];
+  if (!photo) return;
+  togglePhoto(photo.id);
+  updateLightboxCommerce();
+}
+function toggleLightboxFavorite() {
+  const photo = lightboxPhotos[lightboxIndex];
+  if (!photo) return;
+  toggleFavorite(photo.id);
+  updateLightboxCommerce();
+}
+function updateLightboxCommerce() {
+  const photo = lightboxPhotos[lightboxIndex];
+  const selectBtn = document.getElementById('lb-select-btn');
+  const favBtn = document.getElementById('lb-favorite-btn');
+  if (!photo || !selectBtn || !favBtn) return;
+  const selected = selectedPhotoIds.has(photo.id);
+  const favorite = salesFavoriteIds.has(photo.id);
+  selectBtn.textContent = selected ? '✓ Remover da seleção' : 'Adicionar à seleção';
+  favBtn.textContent = favorite ? '♥ Favoritada' : '♡ Favoritar';
+}
+
 function renderClientGallery() {
   const grid = document.getElementById('client-gallery-grid');
   if (!allClientPhotos.length) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><h3>Galeria vazia</h3><p>O fotógrafo ainda não enviou as fotos.</p></div>`;
+    const emptyTitle = activeFilter === 'favorites' ? 'Nenhuma favorita ainda' : 'Galeria vazia';
+    const emptyDesc = activeFilter === 'favorites' ? 'Toque no coração das fotos que você quer comparar depois.' : 'O fotógrafo ainda não enviou as fotos.';
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><h3>${emptyTitle}</h3><p>${emptyDesc}</p></div>`;
     return;
   }
   let photosToShow = allClientPhotos;
   if (activeFilter === 'selected') photosToShow = allClientPhotos.filter(p => selectedPhotoIds.has(p.id));
   else if (activeFilter === 'unselected') photosToShow = allClientPhotos.filter(p => !selectedPhotoIds.has(p.id));
+  else if (activeFilter === 'favorites') photosToShow = allClientPhotos.filter(p => salesFavoriteIds.has(p.id));
   lightboxPhotos = photosToShow;
   grid.innerHTML = photosToShow.map((photo, i) => {
     const isSelected = selectedPhotoIds.has(photo.id);
     return `
       <div class="client-photo-item ${isSelected ? 'selected' : ''}" id="photo-item-${photo.id}" onclick="togglePhoto('${photo.id}')">
         <img src="${photo.dataUrl}" alt="Foto ${i+1}" loading="lazy" draggable="false">
+        <button class="photo-fav-btn ${salesFavoriteIds.has(photo.id) ? 'active' : ''}" onclick="toggleFavorite('${photo.id}', event)" aria-label="${salesFavoriteIds.has(photo.id) ? 'Remover favorita' : 'Favoritar foto'}">${salesFavoriteIds.has(photo.id) ? '♥' : '♡'}</button>
         <div class="photo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div class="photo-num">#${allClientPhotos.indexOf(photo)+1}</div>
         <div class="photo-view-btn" onclick="openLightboxClient(${i}, event)">
@@ -2974,6 +3499,7 @@ function togglePhoto(photoId) {
   const item = document.getElementById(`photo-item-${photoId}`);
   if (item) item.classList.toggle('selected', selectedPhotoIds.has(photoId));
   updateClientCounter();
+  renderSalesEngine();
   autoSaveDraft();
 }
 
@@ -2984,6 +3510,7 @@ function autoSaveDraft() {
     clientId: currentClientData.id,
     selectedPhotoIds: Array.from(selectedPhotoIds),
     extrasCount: extras, totalValue,
+    albumAdded: salesAlbumAdded, albumPrice: salesAlbumAdded ? SALES_ENGINE_SETTINGS.albumPrice : 0, albumBonusPhotos: salesAlbumAdded ? SALES_ENGINE_SETTINGS.albumBonusPhotos : 0,
     paymentStatus: paymentStatus === 'paid' ? 'paid' : 'pending',
     confirmedAt: null, createdAt: new Date().toISOString()
   }).catch(() => {});
@@ -2992,47 +3519,64 @@ function autoSaveDraft() {
 function updateClientCounter() {
   const selected = selectedPhotoIds.size;
   const { extras, totalValue } = calculateExtras();
+  const albumBonus = salesAlbumAdded ? SALES_ENGINE_SETTINGS.albumBonusPhotos : 0;
+  const freeAlbumUsed = salesAlbumAdded ? Math.min(albumBonus, Math.max(0, selected - currentClientData.includedCount)) : 0;
   document.getElementById('chip-selected').textContent = selected;
-  document.getElementById('chip-included').textContent = currentClientData.includedCount;
+  document.getElementById('chip-included').textContent = currentClientData.includedCount + albumBonus;
   document.getElementById('chip-extras').textContent = extras;
-  document.getElementById('chip-total').textContent = extras > 0 ? formatCurrency(totalValue) : 'R$0';
+  document.getElementById('chip-total').textContent = totalValue > 0 ? formatCurrency(totalValue) : 'R$0';
   document.getElementById('action-total').textContent = formatCurrency(totalValue);
-  const pct = Math.min(100, (selected / currentClientData.includedCount) * 100);
+  const pct = Math.min(100, (selected / Math.max(1, currentClientData.includedCount + albumBonus)) * 100);
   const fill = document.getElementById('progress-fill');
   fill.style.width = pct + '%';
-  fill.classList.toggle('over', selected > currentClientData.includedCount);
-  document.getElementById('progress-text').textContent = `${selected} / ${currentClientData.includedCount}`;
+  fill.classList.toggle('over', selected > (currentClientData.includedCount + albumBonus));
+  document.getElementById('progress-text').textContent = salesAlbumAdded ? `${selected} / ${currentClientData.includedCount + albumBonus}` : `${selected} / ${currentClientData.includedCount}`;
   const btnPay = document.getElementById('btn-pay');
   const btnConfirm = document.getElementById('btn-confirm');
+  const hasAlbum = salesAlbumAdded;
   if (selected === 0) {
     btnPay.style.display = 'none';
     btnConfirm.disabled = true;
-  } else if (extras > 0 && paymentStatus !== 'paid') {
+  } else if ((extras > 0 || hasAlbum) && paymentStatus !== 'paid') {
     btnPay.style.display = 'flex';
     btnConfirm.disabled = true;
   } else {
     btnPay.style.display = 'none';
     btnConfirm.disabled = false;
   }
+  const totalLabel = document.getElementById('action-total-label');
+  if (totalLabel) totalLabel.textContent = hasAlbum && extras === 0 ? 'Álbum + benefícios' : 'Total da sua seleção';
+  const confirmBtn = document.getElementById('btn-confirm');
+  if (confirmBtn) confirmBtn.textContent = paymentStatus === 'paid' ? 'Confirmar e enviar seleção' : 'Confirmar seleção';
+  if (salesAlbumAdded) {
+    const albumPill = document.getElementById('chip-included');
+    if (albumPill) albumPill.title = `${currentClientData.includedCount} incluídas + até ${SALES_ENGINE_SETTINGS.albumBonusPhotos} fotos do álbum`;
+  }
+  renderSalesEngine();
 }
 
 function calculateExtras() {
   const selected = selectedPhotoIds.size;
-  const extras = Math.max(0, selected - currentClientData.includedCount);
-  const totalValue = extras * currentClientData.pricePerExtra;
-  return { extras, totalValue };
+  const included = Math.max(0, Number(currentClientData?.includedCount) || 0);
+  const rawExtras = Math.max(0, selected - included);
+  const extras = getChargeableExtras(selected);
+  const totalPhotos = allClientPhotos.length;
+  const totalValue = getSalesExtraPrice(rawExtras, totalPhotos, selected);
+  return { extras, rawExtras, totalValue };
 }
 
 function deselectAll() {
   selectedPhotoIds.clear();
   document.querySelectorAll('.client-photo-item.selected').forEach(el => el.classList.remove('selected'));
   updateClientCounter();
+  renderSalesEngine();
 }
 
 function filterGallery(type) {
   activeFilter = type;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(`filter-${type}`).classList.add('active');
+  const filterButton = document.getElementById(`filter-${type}`);
+  if (filterButton) filterButton.classList.add('active');
   renderClientGallery();
 }
 
@@ -3061,7 +3605,7 @@ async function openPixModal() {
   const tiposLabel = { email: 'E-mail', cpf: 'CPF', phone: 'Telefone', random: 'Chave Aleatória' };
   document.getElementById('pix-amount-display').textContent = formatCurrency(totalValue);
   document.getElementById('pix-amount-inline').textContent  = formatCurrency(totalValue);
-  document.getElementById('pix-extras-detail').textContent  = `${extras} foto(s) extra × ${formatCurrency(currentClientData.pricePerExtra)}`;
+  document.getElementById('pix-extras-detail').textContent  = `${extras} foto(s) extra${salesAlbumAdded ? ` + álbum impresso com até ${SALES_ENGINE_SETTINGS.albumBonusPhotos} fotos` : ''} • total ${formatCurrency(totalValue)}`;
   document.getElementById('pix-key-display').textContent    = pixConfig.key;
   document.getElementById('pix-type-display').textContent   = tiposLabel[pixConfig.type] || pixConfig.type || '—';
   document.getElementById('pix-name-display').textContent   = pixConfig.name || '—';
@@ -3092,6 +3636,8 @@ async function openConfirmModal() {
   document.getElementById('confirm-included').textContent = currentClientData.includedCount;
   document.getElementById('confirm-extras').textContent = extras;
   document.getElementById('confirm-total').textContent = formatCurrency(totalValue);
+  const confirmAlbum = document.getElementById('confirm-album-detail');
+  if (confirmAlbum) { confirmAlbum.style.display = salesAlbumAdded ? 'block' : 'none'; confirmAlbum.textContent = salesAlbumAdded ? `Álbum impresso 21×30 cm · 23 páginas · capa dura + até ${SALES_ENGINE_SETTINGS.albumBonusPhotos} fotos · +R$ ${SALES_ENGINE_SETTINGS.albumPrice}` : ''; }
   const thumbs = document.getElementById('confirm-thumbs');
   thumbs.innerHTML = '';
   for (const photoId of selectedPhotoIds) {
@@ -3111,6 +3657,7 @@ async function confirmSelection() {
     clientId: currentClientData.id,
     selectedPhotoIds: Array.from(selectedPhotoIds),
     extrasCount: extras, totalValue,
+    albumAdded: salesAlbumAdded, albumPrice: salesAlbumAdded ? SALES_ENGINE_SETTINGS.albumPrice : 0, albumBonusPhotos: salesAlbumAdded ? SALES_ENGINE_SETTINGS.albumBonusPhotos : 0,
     paymentStatus: 'confirmed',
     confirmedAt: new Date().toISOString(),
     createdAt: new Date().toISOString()
@@ -3139,6 +3686,12 @@ async function confirmSelection() {
 function showAlreadyConfirmedState(sel, client, photos) {
   document.getElementById('loading-screen').classList.add('hidden');
   document.getElementById('client-panel').classList.remove('hidden');
+  const confirmedSales = document.getElementById('sales-engine');
+  const confirmedProgress = document.getElementById('progress-container');
+  const confirmedActionBar = document.getElementById('action-bar');
+  if (confirmedSales) confirmedSales.style.display = 'none';
+  if (confirmedProgress) confirmedProgress.style.display = 'none';
+  if (confirmedActionBar) confirmedActionBar.style.display = 'none';
   const selPhotos = photos.filter(p => sel.selectedPhotoIds.includes(p.id));
   document.getElementById('banner-event-name').textContent = client.event || client.name;
   document.getElementById('banner-client-name').textContent = `Cliente: ${client.name}`;
@@ -3165,6 +3718,8 @@ function showAlreadyConfirmedState(sel, client, photos) {
   `;
   document.getElementById('action-bar').style.display = 'none';
   document.getElementById('progress-container').style.display = 'none';
+  const salesEngine = document.getElementById('sales-engine');
+  if (salesEngine) salesEngine.style.display = 'none';
   currentClientData = client;
   selectedPhotoIds = new Set(sel.selectedPhotoIds);
   allClientPhotos = photos;
@@ -3268,6 +3823,8 @@ async function generatePDF(client, sel, photos, mode) {
 function openLightboxClient(index, e) {
   if (e) e.stopPropagation();
   lightboxIndex = index;
+  const photo = lightboxPhotos[lightboxIndex];
+  if (photo && currentClientData) { salesViewedIds.add(photo.id); saveSalesState(); }
   showLightbox();
 }
 function openLightboxAdmin(photoId, index, e) {
@@ -3283,6 +3840,9 @@ function showLightbox() {
   if (!photo) return;
   document.getElementById('lightbox-img').src = photo.dataUrl || photo;
   document.getElementById('lightbox-info').textContent = `${lightboxIndex + 1} / ${lightboxPhotos.length}`;
+  const commerce = document.getElementById('lightbox-commerce');
+  if (commerce) commerce.style.display = currentClientData ? 'flex' : 'none';
+  if (currentClientData) updateLightboxCommerce();
   document.getElementById('lightbox').classList.remove('hidden');
 }
 function closeLightbox() {
@@ -3291,6 +3851,8 @@ function closeLightbox() {
 }
 function lightboxNav(dir) {
   lightboxIndex = (lightboxIndex + dir + lightboxPhotos.length) % lightboxPhotos.length;
+  const photo = lightboxPhotos[lightboxIndex];
+  if (photo && currentClientData) { salesViewedIds.add(photo.id); saveSalesState(); }
   showLightbox();
 }
 document.getElementById('lightbox').addEventListener('click', function(e) {
