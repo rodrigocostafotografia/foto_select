@@ -821,8 +821,80 @@ body::before {
   .counter-chip .chip-val { font-size: 1.2rem; }
   .action-bar-inner { gap: 10px; }
   .modal-box { padding: 20px; }
-  .selection-summary-grid { grid-template-columns: 1fr; }
+  /* Mantém o resumo do modal em 2 colunas, como no desktop. */
+  .selection-summary-grid { grid-template-columns: 1fr 1fr; }
   .mobile-tabs { display: flex; }
+}
+
+/* ============================================================
+   MOBILE — PRESERVAR A ESTRUTURA HORIZONTAL DO DESKTOP
+   Na página de seleção, os blocos comerciais/modais não devem
+   empilhar verticalmente no celular. Mantemos a composição
+   horizontal e permitimos rolagem lateral apenas quando
+   necessário, preservando proporção e hierarquia visual.
+   ============================================================ */
+@media (max-width: 900px) {
+  .sales-offers {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 2px 8px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sales-offer {
+    flex: 0 0 220px;
+    width: 220px;
+    scroll-snap-align: start;
+  }
+
+  .sales-conversion-steps {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    overflow-x: auto;
+  }
+
+  .sales-step {
+    min-width: 180px;
+  }
+
+  .sales-album-offer {
+    grid-template-columns: 1.15fr .85fr;
+    align-items: stretch;
+  }
+
+  .sales-admin-rule-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  /* Nos celulares muito estreitos, os 4 cartões continuam na mesma linha.
+     O usuário navega horizontalmente sem alterar o desenho de desktop. */
+  .sales-offers {
+    gap: 8px;
+    margin-right: -2px;
+  }
+
+  .sales-offer {
+    flex-basis: 210px;
+    width: 210px;
+  }
+
+  .sales-conversion-steps {
+    gap: 8px;
+    grid-template-columns: repeat(3, 180px);
+  }
+
+  .sales-album-offer {
+    grid-template-columns: 1.15fr .85fr;
+  }
+
+  .selection-summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 .mobile-tab {
   flex-shrink: 0; padding: 8px 16px;
