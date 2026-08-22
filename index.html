@@ -3372,11 +3372,20 @@ function salesSafeGet(key, fallback=[]) {
   try { const raw = window.localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch(e) { return fallback; }
 }
 function salesSafeSet(key, value) { try { window.localStorage.setItem(key, JSON.stringify(value)); } catch(e) {} }
+function salesSessionGet(key, fallback=null) { try { const raw = window.sessionStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch(e) { return fallback; } }
+function salesSessionSet(key, value) { try { window.sessionStorage.setItem(key, JSON.stringify(value)); } catch(e) {} }
+function salesSessionRemove(key) { try { window.sessionStorage.removeItem(key); } catch(e) {} }
 function initSalesEngineState() {
   if (!currentClientData) return;
-  salesAlbumAdded = !!salesSafeGet(salesStorageKey('album', currentClientData.id), false);
+  // O estado do álbum pertence à sessão atual da página, não ao dispositivo.
+  // Isso evita que um localStorage antigo do celular faça aparecer apenas
+  // a oferta de +10 fotos, enquanto o PC abre com as quatro ofertas.
+  const albumSessionKey = `legacySelect_albumSession_${currentClientData.id}`;
+  salesAlbumAdded = !!salesSessionGet(albumSessionKey, false);
   salesViewedIds = new Set(salesSafeGet(salesStorageKey('viewed', currentClientData.id), []));
   salesFavoriteIds = new Set(salesSafeGet(salesStorageKey('favorites', currentClientData.id), []));
+  // Remove qualquer valor antigo do album salvo em localStorage pelas versões anteriores.
+  try { window.localStorage.removeItem(salesStorageKey('album', currentClientData.id)); } catch(e) {}
   updateFavoriteFilterVisibility();
   renderSalesEngine();
 }
@@ -3384,7 +3393,9 @@ function saveSalesState() {
   if (!currentClientData) return;
   salesSafeSet(salesStorageKey('viewed', currentClientData.id), Array.from(salesViewedIds).slice(-80));
   salesSafeSet(salesStorageKey('favorites', currentClientData.id), Array.from(salesFavoriteIds));
-  salesSafeSet(salesStorageKey('album', currentClientData.id), salesAlbumAdded);
+  const albumSessionKey = `legacySelect_albumSession_${currentClientData.id}`;
+  if (salesAlbumAdded) salesSessionSet(albumSessionKey, true);
+  else salesSessionRemove(albumSessionKey);
 }
 function toggleFavorite(photoId, e) {
   if (e) e.stopPropagation();
