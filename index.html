@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1200, initial-scale=0.34, minimum-scale=0.25, maximum-scale=5, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rodrigo Costa Fotografia — Sistema de Seleção de Fotos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1225,14 +1225,164 @@ body::before {
   .bw-headline { font-size: 1.65rem; }
 }
 
-
 /* ============================================================
-   CLIENTE / MOBILE: manter a experiência visual de DESKTOP
-   A página de seleção é entregue com viewport fixo de 1200px,
-   evitando que os componentes comerciais, galerias e modais
-   sejam empilhados pelo CSS responsivo do celular.
-   O navegador faz a escala visual para caber na tela.
+   CLIENT SELECTION — DESKTOP LAYOUT ON MOBILE
+   The client selection link keeps the same visual geometry as
+   desktop. On phones the page becomes horizontally scrollable
+   instead of stacking the sales cards and dialog internals.
    ============================================================ */
+@media (max-width: 768px) {
+  body.client-desktop-mode {
+    overflow-x: auto;
+    min-width: 1100px;
+  }
+
+  body.client-desktop-mode #client-panel {
+    min-width: 1100px;
+    width: 100%;
+  }
+
+  body.client-desktop-mode #client-header,
+  body.client-desktop-mode #action-bar,
+  body.client-desktop-mode #lightbox {
+    width: max(100vw, 1100px);
+  }
+
+  body.client-desktop-mode .client-header-inner {
+    max-width: 1400px;
+    min-width: 1052px;
+    flex-wrap: nowrap !important;
+    gap: 20px;
+    padding: 16px 0;
+  }
+
+  body.client-desktop-mode .counter-chips {
+    gap: 8px;
+    flex-wrap: nowrap !important;
+  }
+
+  body.client-desktop-mode .counter-chip {
+    min-width: 80px;
+    padding: 8px 16px;
+  }
+
+  body.client-desktop-mode .counter-chip .chip-val {
+    font-size: 1.3rem;
+  }
+
+  body.client-desktop-mode #client-info-banner {
+    min-width: 1100px;
+  }
+
+  body.client-desktop-mode .info-banner {
+    padding: 20px 24px;
+    gap: 24px;
+    flex-wrap: nowrap !important;
+  }
+
+  body.client-desktop-mode .info-banner-stats {
+    gap: 20px;
+    flex-wrap: nowrap !important;
+  }
+
+  body.client-desktop-mode .sales-engine {
+    min-width: 1100px;
+    padding: 0 24px;
+  }
+
+  body.client-desktop-mode .sales-engine-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  body.client-desktop-mode .sales-engine-head {
+    flex-wrap: nowrap !important;
+  }
+
+  body.client-desktop-mode .sales-engine-progress {
+    min-width: 190px;
+    width: auto !important;
+    text-align: right !important;
+  }
+
+  body.client-desktop-mode .sales-offers {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  body.client-desktop-mode .sales-conversion-steps {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  body.client-desktop-mode .sales-album-offer {
+    grid-template-columns: 1.15fr .85fr !important;
+    gap: 18px;
+  }
+
+  body.client-desktop-mode .sales-admin-rule-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  body.client-desktop-mode .sales-album-video-wrap {
+    min-height: 0;
+  }
+
+  body.client-desktop-mode #client-gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  }
+
+  body.client-desktop-mode .client-gallery-container {
+    padding: 32px 24px;
+    min-width: 1100px;
+  }
+
+  body.client-desktop-mode .client-gallery-header {
+    flex-wrap: nowrap !important;
+  }
+
+  body.client-desktop-mode .action-bar-inner {
+    min-width: 1052px;
+    flex-wrap: nowrap !important;
+    gap: 16px;
+  }
+
+  body.client-desktop-mode .action-bar-btns {
+    width: auto !important;
+    flex-wrap: nowrap !important;
+  }
+
+  body.client-desktop-mode .action-bar-btns .btn {
+    flex: 0 0 auto !important;
+    min-height: 0;
+  }
+
+  /* Real dialog modals: preserve desktop widths and internal grids. */
+  body.client-desktop-mode .modal-overlay {
+    width: max(100vw, 1100px);
+    min-width: 1100px;
+    padding: 20px;
+  }
+
+  body.client-desktop-mode .modal-box {
+    padding: 32px;
+  }
+
+  body.client-desktop-mode .modal-box.wide {
+    max-width: 700px;
+  }
+
+  body.client-desktop-mode .selection-summary-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  body.client-desktop-mode .modal-box .btn-block {
+    width: 100%;
+  }
+
+  body.client-desktop-mode .modal-box > div[style*="display:flex"][style*="flex-wrap:wrap"] {
+    flex-wrap: nowrap !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3179,11 +3329,13 @@ async function loadClientArea(clientId) {
     document.getElementById('bonus-wheel-screen')
       .querySelector('.bw-result-cta')
       .addEventListener('click', () => {
+        enterClientDesktopMode();
         document.getElementById('client-panel').classList.remove('hidden');
       }, {once: true});
     return;
   }
 
+  enterClientDesktopMode();
   document.getElementById('client-panel').classList.remove('hidden');
   const salesEngine = document.getElementById('sales-engine');
   if (salesEngine) salesEngine.style.display = '';
@@ -3209,6 +3361,11 @@ async function loadClientArea(clientId) {
   }
 }
 
+
+
+function enterClientDesktopMode() {
+  document.body.classList.add('client-desktop-mode');
+}
 
 function salesStorageKey(kind, clientId) { return `legacySelect_${kind}_${clientId}`; }
 function salesSafeGet(key, fallback=[]) {
@@ -3694,6 +3851,7 @@ async function confirmSelection() {
 
 function showAlreadyConfirmedState(sel, client, photos) {
   document.getElementById('loading-screen').classList.add('hidden');
+  enterClientDesktopMode();
   document.getElementById('client-panel').classList.remove('hidden');
   const confirmedSales = document.getElementById('sales-engine');
   const confirmedProgress = document.getElementById('progress-container');
