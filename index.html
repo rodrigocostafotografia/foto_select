@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=1200, initial-scale=0.34, minimum-scale=0.25, maximum-scale=5, viewport-fit=cover">
 <title>Rodrigo Costa Fotografia — Sistema de Seleção de Fotos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1227,139 +1227,12 @@ body::before {
 
 
 /* ============================================================
-   MOBILE — PRESERVAR LAYOUT DESKTOP NA PÁGINA DE SELEÇÃO
-   A página gerada pelo link deve manter a mesma composição
-   horizontal do desktop, sem empilhar cards, estatísticas e
-   blocos dos modais quando aberta em celular.
+   CLIENTE / MOBILE: manter a experiência visual de DESKTOP
+   A página de seleção é entregue com viewport fixo de 1200px,
+   evitando que os componentes comerciais, galerias e modais
+   sejam empilhados pelo CSS responsivo do celular.
+   O navegador faz a escala visual para caber na tela.
    ============================================================ */
-@media (max-width: 768px) {
-  /* Cliente: trava a largura estrutural para conservar o layout desktop.
-     O usuário pode deslizar horizontalmente no celular, em vez de receber
-     uma versão reorganizada em várias linhas. */
-  #client-panel {
-    min-width: 1120px;
-  }
-
-  #client-header {
-    min-width: 1120px;
-  }
-
-  .client-header-inner {
-    flex-wrap: nowrap;
-    gap: 20px;
-    padding: 16px 0;
-  }
-
-  .counter-chips {
-    flex-wrap: nowrap;
-    gap: 8px;
-  }
-
-  .counter-chip {
-    min-width: 80px;
-    padding: 8px 16px;
-  }
-
-  #client-info-banner {
-    min-width: 1120px;
-    padding: 20px 24px 0;
-  }
-
-  .info-banner {
-    flex-wrap: nowrap;
-    gap: 24px;
-    padding: 20px 24px;
-  }
-
-  .info-banner-stats {
-    flex-wrap: nowrap;
-    gap: 20px;
-  }
-
-  .client-gallery-container {
-    min-width: 1120px;
-    padding: 32px 24px;
-  }
-
-  .client-gallery-header {
-    flex-wrap: nowrap;
-  }
-
-  #client-gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-
-  /* Sales Engine: mantém as mesmas colunas da versão desktop. */
-  #sales-engine.sales-engine {
-    min-width: 1120px;
-  }
-
-  #sales-engine .sales-conversion-steps {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  #sales-engine .sales-album-offer {
-    grid-template-columns: 1.15fr .85fr;
-  }
-
-  #sales-engine .sales-offers {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  #sales-engine .sales-admin-rule-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  #sales-engine .sales-engine-progress {
-    width: auto;
-    text-align: right;
-  }
-
-  /* Barra inferior: conserva a distribuição horizontal do desktop. */
-  #action-bar {
-    min-width: 1120px;
-    padding: 16px 24px calc(16px + env(safe-area-inset-bottom));
-  }
-
-  .action-bar-inner {
-    flex-wrap: nowrap;
-    gap: 16px;
-  }
-
-  .action-bar-btns {
-    width: auto;
-    flex-wrap: nowrap;
-    gap: 10px;
-  }
-
-  .action-bar-btns .btn {
-    flex: 0 0 auto;
-    min-height: 0;
-  }
-
-  /* Modais: não desmontar grids/flex no celular. */
-  .modal-overlay {
-    padding: 20px;
-    overflow: auto;
-  }
-
-  .modal-box {
-    padding: 32px;
-    max-height: calc(100dvh - 40px);
-  }
-
-  .modal-box.wide {
-    width: min(700px, calc(100vw - 40px));
-  }
-
-  .selection-summary-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  #modal-confirm .selection-thumbs {
-    flex-wrap: wrap;
-  }
-}
 </style>
 </head>
 <body>
