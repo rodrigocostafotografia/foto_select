@@ -3515,8 +3515,8 @@ function renderSalesEngine() {
   if (salesAlbumAdded && albumRemaining > 0) {
     note.innerHTML = `📖 <strong>Seu álbum está reservado.</strong> Você ainda pode escolher <strong>${albumRemaining} foto${albumRemaining===1?'':'s'}</strong> para completar as 10 fotos extras do álbum.`;
   } else if (selected === 0) {
-    title.textContent = 'Comece pelas fotos que fazem você sentir ❤️';
-    sub.textContent = `Você tem ${included} foto${included === 1 ? '' : 's'} incluída${included === 1 ? '' : 's'} no pacote. Escolha primeiro as imagens indispensáveis — sem pressa.`;
+    title.textContent = 'Pacotes de Extras para Você❤️';
+    sub.textContent = `Você tem ${included} foto${included === 1 ? '' : 's'} incluída${included === 1 ? '' : 's'} no pacote. Gostou de mais fotos? Aproveite!.`;
     note.innerHTML = '💡 <strong>Você pode mudar de ideia:</strong> marque favoritas, abra as fotos em tela cheia e só depois finalize sua seleção.';
   } else if (selected < included) {
     const left = included - selected;
