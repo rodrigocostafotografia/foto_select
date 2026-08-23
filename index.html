@@ -1226,395 +1226,470 @@ body::before {
 }
 
 /* ============================================================
-   CLIENT SELECTION — MOBILE-FIRST / FIT-TO-VIEWPORT
-   A seleção do cliente ocupa 100% do viewport no celular.
-   Não há largura artificial, zoom ou rolagem horizontal.
+   CLIENT SELECTION — DESKTOP LAYOUT ON MOBILE
+   The client selection link keeps the same visual geometry as
+   desktop. On phones the page becomes horizontally scrollable
+   instead of stacking the sales cards and dialog internals.
    ============================================================ */
 @media (max-width: 768px) {
-  html:has(body.client-desktop-mode) {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-  }
-
   body.client-desktop-mode {
-    width: 100%;
-    min-width: 0;
-    max-width: 100vw;
-    overflow-x: hidden;
-    padding: 0;
-    margin: 0;
+    overflow-x: auto;
+    min-width: 1100px;
   }
 
   body.client-desktop-mode #client-panel {
+    min-width: 1100px;
     width: 100%;
-    min-width: 0;
-    max-width: 100vw;
-    min-height: 100dvh;
-    overflow-x: clip;
   }
 
   body.client-desktop-mode #client-header,
   body.client-desktop-mode #action-bar,
   body.client-desktop-mode #lightbox {
-    width: 100%;
-    min-width: 0;
-    max-width: 100vw;
+    width: max(100vw, 1100px);
   }
 
   body.client-desktop-mode .client-header-inner {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    padding: 10px 12px;
-    gap: 8px;
+    max-width: 1400px;
+    min-width: 1052px;
     flex-wrap: nowrap !important;
-    overflow: hidden;
-  }
-
-  body.client-desktop-mode .client-logo {
-    min-width: 0;
-    flex: 1 1 auto;
-    margin-right: 0;
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    gap: 20px;
+    padding: 16px 0;
   }
 
   body.client-desktop-mode .counter-chips {
-    flex: 0 0 auto;
-    max-width: 62vw;
-    gap: 6px;
+    gap: 8px;
     flex-wrap: nowrap !important;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
   }
-  body.client-desktop-mode .counter-chips::-webkit-scrollbar { display:none; }
 
   body.client-desktop-mode .counter-chip {
-    flex: 0 0 auto;
-    min-width: 58px;
-    padding: 6px 8px;
-    border-radius: 9px;
+    min-width: 80px;
+    padding: 8px 16px;
   }
 
-  body.client-desktop-mode .counter-chip .chip-val { font-size: 1.05rem; }
-  body.client-desktop-mode .counter-chip .chip-label { font-size: .55rem; }
+  body.client-desktop-mode .counter-chip .chip-val {
+    font-size: 1.3rem;
+  }
 
   body.client-desktop-mode #client-info-banner {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    padding: 10px 12px 0;
+    min-width: 1100px;
   }
 
   body.client-desktop-mode .info-banner {
-    padding: 13px;
-    gap: 12px;
-    border-radius: 15px;
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow: hidden;
-  }
-
-  body.client-desktop-mode .info-banner-main {
-    min-width: 0;
-    flex: 1 1 auto;
-  }
-  body.client-desktop-mode .info-banner-main h2 {
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  body.client-desktop-mode .info-banner-main p {
-    font-size: .7rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding: 20px 24px;
+    gap: 24px;
+    flex-wrap: nowrap !important;
   }
 
   body.client-desktop-mode .info-banner-stats {
-    flex: 0 0 auto;
-    gap: 8px;
-    flex-wrap: nowrap;
+    gap: 20px;
+    flex-wrap: nowrap !important;
   }
-  body.client-desktop-mode .ib-stat { min-width: 46px; }
-  body.client-desktop-mode .ib-stat .ib-val { font-size: 1rem; }
-  body.client-desktop-mode .ib-stat .ib-label { font-size: .52rem; }
 
   body.client-desktop-mode .sales-engine {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    padding: 0 12px;
+    min-width: 1100px;
+    padding: 0 24px;
   }
 
   body.client-desktop-mode .sales-engine-card {
-    width: 100%;
-    min-width: 0;
-    padding: 13px;
-    border-radius: 15px;
+    padding: 20px;
+    border-radius: 20px;
   }
 
   body.client-desktop-mode .sales-engine-head {
-    gap: 8px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap !important;
   }
 
   body.client-desktop-mode .sales-engine-progress {
-    min-width: 0;
-    width: 100% !important;
-    text-align: left !important;
+    min-width: 190px;
+    width: auto !important;
+    text-align: right !important;
   }
 
   body.client-desktop-mode .sales-offers {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 8px;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
-
-  body.client-desktop-mode .sales-offer {
-    min-width: 0;
-    padding: 11px;
-    border-radius: 12px;
-  }
-
-  body.client-desktop-mode .sales-offer-name { font-size: .78rem; }
-  body.client-desktop-mode .sales-offer-desc { font-size: .67rem; line-height: 1.35; }
-  body.client-desktop-mode .sales-offer-price strong { font-size: 1rem; }
-  body.client-desktop-mode .sales-offer-cta { font-size: .68rem; }
 
   body.client-desktop-mode .sales-conversion-steps {
-    grid-template-columns: repeat(3, minmax(0,1fr)) !important;
-    gap: 6px;
-  }
-
-  body.client-desktop-mode .sales-conversion-step {
-    min-width: 0;
-    padding: 8px;
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 
   body.client-desktop-mode .sales-album-offer {
-    grid-template-columns: 1fr !important;
-    gap: 10px;
-  }
-
-  body.client-desktop-mode .sales-album-benefits {
-    grid-template-columns: repeat(2, minmax(0,1fr));
+    grid-template-columns: 1.15fr .85fr !important;
+    gap: 18px;
   }
 
   body.client-desktop-mode .sales-admin-rule-grid {
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    grid-template-columns: repeat(4, 1fr) !important;
   }
 
   body.client-desktop-mode .sales-album-video-wrap {
-    min-height: 190px;
-  }
-
-  body.client-desktop-mode .client-gallery-container {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    padding: 16px 12px 128px;
-  }
-
-  body.client-desktop-mode .client-gallery-header {
-    gap: 10px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
-
-  body.client-desktop-mode .client-gallery-title {
-    font-size: 1.08rem;
-  }
-
-  body.client-desktop-mode .client-gallery-title span {
-    font-size: .82rem;
-  }
-
-  body.client-desktop-mode .filter-btns {
-    width: 100%;
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  body.client-desktop-mode .filter-btns::-webkit-scrollbar { display:none; }
-
-  body.client-desktop-mode .filter-btn {
-    flex: 0 0 auto;
-    min-height: 38px;
-    padding: 7px 11px;
-    font-size: .72rem;
+    min-height: 0;
   }
 
   body.client-desktop-mode #client-gallery-grid {
-    width: 100%;
-    min-width: 0;
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
   }
 
-  body.client-desktop-mode .client-photo-item {
-    width: 100%;
-    min-width: 0;
-    aspect-ratio: 4 / 5;
-    border-radius: 11px;
+  body.client-desktop-mode .client-gallery-container {
+    padding: 32px 24px;
+    min-width: 1100px;
   }
 
-  body.client-desktop-mode .client-photo-item:hover {
-    transform: none;
-  }
-
-  body.client-desktop-mode .client-photo-item .photo-check {
-    width: 28px;
-    height: 28px;
-    top: 7px;
-    right: 7px;
-  }
-
-  body.client-desktop-mode .client-photo-item .photo-fav-btn {
-    width: 30px;
-    height: 30px;
-    left: 7px;
-    top: 7px;
-  }
-
-  body.client-desktop-mode .client-photo-item .photo-view-btn {
-    opacity: 1;
-    bottom: 7px;
-    right: 7px;
-    padding: 6px 8px;
-    font-size: .62rem;
-    background: rgba(0,0,0,.62);
-  }
-
-  body.client-desktop-mode #action-bar {
-    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
-    background: rgba(7,8,11,.96);
+  body.client-desktop-mode .client-gallery-header {
+    flex-wrap: nowrap !important;
   }
 
   body.client-desktop-mode .action-bar-inner {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    gap: 8px;
-    flex-wrap: nowrap;
-  }
-
-  body.client-desktop-mode .action-bar-info {
-    min-width: 0;
-    flex: 1 1 auto;
-  }
-
-  body.client-desktop-mode .action-bar-info .total-label {
-    font-size: .58rem;
-  }
-
-  body.client-desktop-mode .action-bar-info .total-value {
-    font-size: 1.05rem;
+    min-width: 1052px;
+    flex-wrap: nowrap !important;
+    gap: 16px;
   }
 
   body.client-desktop-mode .action-bar-btns {
-    flex: 0 0 auto;
     width: auto !important;
-    gap: 6px;
     flex-wrap: nowrap !important;
   }
 
   body.client-desktop-mode .action-bar-btns .btn {
     flex: 0 0 auto !important;
-    min-height: 42px;
-    padding: 0 11px;
-    font-size: .68rem;
+    min-height: 0;
   }
 
-  body.client-desktop-mode #lightbox {
-    position: fixed;
-    inset: 0;
-    min-width: 0;
-    min-height: 100dvh;
-    padding: max(14px, env(safe-area-inset-top)) 10px max(14px, env(safe-area-inset-bottom));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  body.client-desktop-mode #lightbox-img {
-    width: min(94vw, 94dvw);
-    height: min(78dvh, 78dvh);
-    object-fit: contain;
-    max-width: 100%;
-    max-height: 78dvh;
-  }
-
-  body.client-desktop-mode #lightbox-commerce {
-    left: 10px;
-    right: 10px;
-    bottom: calc(48px + env(safe-area-inset-bottom));
-    transform: none;
-    justify-content: center;
-    width: auto;
-  }
-
-  body.client-desktop-mode #lightbox-commerce button {
-    flex: 1 1 0;
-    min-width: 0;
-    min-height: 46px;
-    font-size: .72rem;
-  }
-
-  body.client-desktop-mode #lightbox-close,
-  body.client-desktop-mode #lightbox-prev,
-  body.client-desktop-mode #lightbox-next {
-    width: 42px;
-    height: 42px;
-    min-width: 42px;
-    min-height: 42px;
-  }
-
-  /* Dialogs ocupam o viewport como sheets, sem exigir zoom. */
+  /* Real dialog modals: preserve desktop widths and internal grids. */
   body.client-desktop-mode .modal-overlay {
-    width: 100%;
-    min-width: 0;
-    padding: 10px;
+    width: max(100vw, 1100px);
+    min-width: 1100px;
+    padding: 20px;
   }
 
   body.client-desktop-mode .modal-box {
-    width: 100%;
-    max-width: 680px;
-    max-height: 88dvh;
-    padding: 18px;
-    border-radius: 18px;
-    overflow-y: auto;
+    padding: 32px;
   }
 
-  body.client-desktop-mode .modal-box.wide { max-width: 760px; }
+  body.client-desktop-mode .modal-box.wide {
+    max-width: 700px;
+  }
 
   body.client-desktop-mode .selection-summary-grid {
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  body.client-desktop-mode .modal-box .btn-block {
+    width: 100%;
   }
 
   body.client-desktop-mode .modal-box > div[style*="display:flex"][style*="flex-wrap:wrap"] {
-    flex-wrap: wrap !important;
+    flex-wrap: nowrap !important;
   }
 }
 
-/* Telas muito estreitas: uma única coluna somente para impedir compressão. */
-@media (max-width: 380px) {
-  body.client-desktop-mode #client-gallery-grid {
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+
+/* ============================================================
+   LEGACY SELECT — MOBILE WEB EXPERIENCE
+   Mobile-first para a página gerada de seleção.
+   Mantém o conteúdo como uma página web contínua, sem zoom
+   horizontal e sem empilhar cada área como blocos gigantes.
+   ============================================================ */
+@media (max-width: 768px) {
+  html { scroll-behavior: smooth; }
+  body.client-desktop-mode {
+    min-width: 0 !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+    background: var(--bg);
+  }
+
+  body.client-desktop-mode #client-panel {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-bottom: calc(104px + env(safe-area-inset-bottom));
+  }
+
+  /* Cabeçalho compacto: continua sendo uma barra de site. */
+  body.client-desktop-mode #client-header {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 0 12px;
+  }
+  body.client-desktop-mode .client-header-inner {
+    min-width: 0 !important;
+    width: 100%;
+    max-width: 100% !important;
+    padding: 10px 0;
+    gap: 8px;
+    flex-wrap: nowrap !important;
+    overflow: hidden;
+  }
+  body.client-desktop-mode .client-logo {
+    min-width: 0;
+    max-width: 42vw;
+    margin-right: auto;
+    font-size: .9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  body.client-desktop-mode .counter-chips {
+    flex: 0 0 auto;
+    gap: 5px;
+    flex-wrap: nowrap !important;
+  }
+  body.client-desktop-mode .counter-chip {
+    min-width: 52px;
+    padding: 5px 7px;
+    border-radius: 9px;
+  }
+  body.client-desktop-mode .counter-chip .chip-val { font-size: .95rem; }
+  body.client-desktop-mode .counter-chip .chip-label {
+    font-size: .48rem;
+    letter-spacing: .07em;
+  }
+
+  /* Banner: composição horizontal compacta, sem exigir zoom. */
+  body.client-desktop-mode #client-info-banner {
+    min-width: 0 !important;
+    width: 100%;
+    padding: 12px 12px 0;
+  }
+  body.client-desktop-mode .info-banner {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    gap: 12px;
+    align-items: center;
+    padding: 14px;
+    border-radius: 16px;
+  }
+  body.client-desktop-mode .info-banner-main h2 { font-size: 1rem; }
+  body.client-desktop-mode .info-banner-main p {
+    font-size: .68rem;
+    line-height: 1.35;
+  }
+  body.client-desktop-mode .info-banner-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(58px, 1fr));
     gap: 6px;
   }
+  body.client-desktop-mode .info-stat { min-width: 58px; }
+  body.client-desktop-mode .info-stat-value { font-size: .9rem; }
+  body.client-desktop-mode .info-stat-label { font-size: .5rem; }
+
+  /* Área comercial: a página continua, mas os grupos densos viram
+     trilhas horizontais suaves em vez de uma longa coluna vertical. */
+  body.client-desktop-mode .sales-engine {
+    min-width: 0 !important;
+    width: 100%;
+    padding: 0 12px;
+    margin-top: 12px;
+  }
+  body.client-desktop-mode .sales-engine-card {
+    padding: 13px;
+    border-radius: 16px;
+  }
+  body.client-desktop-mode .sales-engine-head {
+    gap: 8px;
+    align-items: flex-start;
+    flex-wrap: wrap !important;
+  }
+  body.client-desktop-mode .sales-conversion-intro {
+    padding: 11px 12px;
+  }
+  body.client-desktop-mode .sales-conversion-steps {
+    display: flex;
+    overflow-x: auto;
+    gap: 7px;
+    padding-bottom: 3px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+  body.client-desktop-mode .sales-conversion-steps::-webkit-scrollbar { display:none; }
+  body.client-desktop-mode .sales-step {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+
   body.client-desktop-mode .sales-offers {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding-bottom: 4px;
+    margin-top: 12px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  body.client-desktop-mode .sales-offers::-webkit-scrollbar { display:none; }
+  body.client-desktop-mode .sales-offer {
+    flex: 0 0 73%;
+    min-width: 0;
+    scroll-snap-align: start;
+    padding: 12px;
+  }
+
+  body.client-desktop-mode .sales-album-offer {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(110px,.72fr) !important;
+    gap: 10px;
+    padding: 12px;
+  }
+  body.client-desktop-mode .sales-album-benefits {
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  body.client-desktop-mode .sales-album-title { font-size: .94rem; }
+  body.client-desktop-mode .sales-album-sub { font-size: .66rem; }
+  body.client-desktop-mode .sales-album-price strong { font-size: 1rem; }
+
+  /* Galeria — 2 colunas de verdade, sem layout de desktop reduzido.
+     Isso mantém a sensação de "site" e permite navegar sem zoom. */
+  body.client-desktop-mode .client-gallery-container {
+    min-width: 0 !important;
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 12px 24px;
+  }
+  body.client-desktop-mode .client-gallery-header {
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: nowrap !important;
+    align-items: center;
+  }
+  body.client-desktop-mode .client-gallery-title {
+    min-width: 0;
+    font-size: 1.05rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  body.client-desktop-mode .client-gallery-title span { font-size: .78rem; }
+  body.client-desktop-mode .filter-btns {
+    flex: 0 0 auto;
+    overflow-x: auto;
+    max-width: 55vw;
+    scrollbar-width: none;
+  }
+  body.client-desktop-mode .filter-btns::-webkit-scrollbar { display:none; }
+  body.client-desktop-mode .filter-btn {
+    padding: 6px 10px;
+    font-size: .68rem;
+    white-space: nowrap;
+  }
+  body.client-desktop-mode #client-gallery-grid {
+    min-width: 0 !important;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    gap: 8px;
+  }
+  body.client-desktop-mode .client-photo-item {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 10px;
+  }
+  body.client-desktop-mode .client-photo-item:hover {
+    transform: none;
+  }
+  body.client-desktop-mode .photo-check {
+    top: 7px;
+    right: 7px;
+    width: 27px;
+    height: 27px;
+  }
+  body.client-desktop-mode .photo-num {
+    bottom: 7px;
+    left: 7px;
+    font-size: .58rem;
+    padding: 2px 6px;
+  }
+  body.client-desktop-mode .photo-view-btn {
+    opacity: 1;
+    bottom: 7px;
+    right: 7px;
+    font-size: .58rem;
+    padding: 4px 6px;
+  }
+
+  /* Barra de ações fixa, mas compacta e totalmente visível. */
+  body.client-desktop-mode #action-bar {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  }
+  body.client-desktop-mode .action-bar-inner {
+    min-width: 0 !important;
+    width: 100%;
+    gap: 8px;
+    flex-wrap: nowrap !important;
+  }
+  body.client-desktop-mode .action-bar-info {
+    min-width: 74px;
+    flex: 0 0 74px;
+  }
+  body.client-desktop-mode .action-bar-info .total-label {
+    font-size: .52rem;
+    line-height: 1.1;
+  }
+  body.client-desktop-mode .action-bar-info .total-value {
+    font-size: 1.05rem;
+  }
+  body.client-desktop-mode .action-bar-btns {
+    min-width: 0;
+    width: auto !important;
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 6px;
+    flex-wrap: nowrap !important;
+  }
+  body.client-desktop-mode .action-bar-btns .btn {
+    min-width: 0;
+    width: 100%;
+    min-height: 40px;
+    padding: 7px 5px;
+    font-size: .63rem;
+    white-space: normal;
+  }
+
+  /* Lightbox/modal: folha de leitura adequada ao viewport, sem zoom. */
+  body.client-desktop-mode .modal-overlay {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 10px;
+  }
+  body.client-desktop-mode .modal-box {
+    width: min(100%, 680px);
+    max-height: calc(100dvh - 20px);
+    padding: 18px;
+  }
+}
+
+/* Telefones muito estreitos */
+@media (max-width: 420px) {
+  body.client-desktop-mode .client-header-inner { gap: 5px; }
+  body.client-desktop-mode .client-logo { max-width: 34vw; font-size: .82rem; }
+  body.client-desktop-mode .counter-chip { min-width: 48px; padding: 4px 6px; }
+  body.client-desktop-mode .counter-chip .chip-val { font-size: .86rem; }
+  body.client-desktop-mode .counter-chip .chip-label { font-size: .43rem; }
+  body.client-desktop-mode .info-banner {
+    grid-template-columns: 1fr;
+  }
+  body.client-desktop-mode .info-banner-stats {
+    grid-template-columns: repeat(4, minmax(0,1fr));
+  }
+  body.client-desktop-mode .sales-album-offer {
     grid-template-columns: 1fr !important;
   }
-  body.client-desktop-mode .action-bar-info { display:none; }
-  body.client-desktop-mode .action-bar-btns { width:100% !important; }
-  body.client-desktop-mode .action-bar-btns .btn { flex:1 1 0 !important; }
+  body.client-desktop-mode .sales-offer { flex-basis: 84%; }
 }
+
+/* Melhora de renderização em galerias grandes no mobile. */
+@media (max-width: 768px) {
+  body.client-desktop-mode .client-photo-item,
+  body.client-desktop-mode .sales-offer,
+  body.client-desktop-mode .sales-step {
+    content-visibility: auto;
+    contain-intrinsic-size: 180px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3596,11 +3671,7 @@ async function loadClientArea(clientId) {
 
 
 function enterClientDesktopMode() {
-  // Mantido o nome por compatibilidade com o restante do sistema.
-  // A implementação agora é mobile-first: o modo não cria largura artificial.
   document.body.classList.add('client-desktop-mode');
-  document.documentElement.style.overflowX = 'hidden';
-  document.body.style.overflowX = 'hidden';
 }
 
 function salesStorageKey(kind, clientId) { return `legacySelect_${kind}_${clientId}`; }
